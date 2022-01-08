@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +13,13 @@ public class PositionChecker : MonoBehaviour
     static readonly int IgnoreRaycastLayerMask = ~(1 << 2);
 
     Vector2 MousePosition;
-    Camera Camera;
+    private Camera _camera;
     float Angle;
+
+    private void Awake()
+    {
+        _camera = Camera.main;
+    }
 
     void Update()
     {
@@ -82,7 +88,7 @@ public class PositionChecker : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             MousePosition = Input.mousePosition;
-            MousePosition = Camera.ScreenToWorldPoint(MousePosition);
+            MousePosition = _camera.ScreenToWorldPoint(MousePosition);
         }
         if (MousePosition != null)
         {
