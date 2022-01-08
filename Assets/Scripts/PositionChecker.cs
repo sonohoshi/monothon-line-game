@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class raycast : MonoBehaviour
+public class PositionChecker : MonoBehaviour
 {
     string CurrentTile = "";
     const float DO_NOTHING_LENGTH = 5f;
@@ -14,30 +14,19 @@ public class raycast : MonoBehaviour
     Vector2 MousePosition;
     Camera Camera;
     float Angle;
-    GameObject gorani;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        gorani = GameObject.Find("gorani");
-        if (gorani != null)
-            Debug.Log("test");
-    }
 
     void Update()
     {
-        Vector3 tmp = transform.position;
-        BoxCollider2D t = gorani.GetComponent<BoxCollider2D>();
+        BoxCollider2D t = gameObject.GetComponent<BoxCollider2D>();
         Debug.DrawRay(transform.position, (-transform.up + transform.right) * 0.708f, Color.green);
         Debug.DrawRay(transform.position, (-transform.up - transform.right) * 0.708f, Color.green);
         Debug.DrawRay(transform.position, (-transform.up) * 0.5f, Color.green);
-        SetAngle(t, 17);
+        SetAngle(17);
         Debug.Log(Angle);
     }
 
-    void SetAngle(BoxCollider2D t, float length)
+    private void SetAngle(float length)
     {
-        Vector3 tmp = transform.position;
         int masking = 0b000001;
 
         RaycastHit2D left = Physics2D.Raycast(transform.position, (-transform.up - transform.right), 0.8f, IgnoreRaycastLayerMask);
@@ -59,17 +48,17 @@ public class raycast : MonoBehaviour
             Angle = CalculateAngle(left, middle, right, length);
     }
 
-    float CalculateAngle(RaycastHit2D left, RaycastHit2D middle, RaycastHit2D right, float length)
+    private float CalculateAngle(RaycastHit2D left, RaycastHit2D middle, RaycastHit2D right, float length)
     {
-        if (direction() == 0)
+        if (Direction() == 0)
             return (GetBaseAngle(left, middle, right) - (length - MINIMUM_LENGTH) / LENGTH * 60);
-        else if (direction() == 1)
+        else if (Direction() == 1)
             return (GetBaseAngle(left, middle, right) + (length - MINIMUM_LENGTH) / LENGTH * 60);
         else
             return -1;
     }
 
-    float GetBaseAngle(RaycastHit2D left, RaycastHit2D middle, RaycastHit2D right)
+    private static float GetBaseAngle(RaycastHit2D left, RaycastHit2D middle, RaycastHit2D right)
     {
         Debug.Log($"left.point : {left.point}, left : {left.collider}");
         Debug.Log($"right.point : {right.point}, left : {right.collider}");
@@ -87,7 +76,7 @@ public class raycast : MonoBehaviour
         }
     }
 
-    int direction()
+    private int Direction()
     {
         Vector3 tmp = transform.position;
         if (Input.GetMouseButtonDown(0))
