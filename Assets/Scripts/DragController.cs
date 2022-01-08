@@ -30,7 +30,8 @@ public class DragController : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
-            distance = (_startPosition - (Vector2) _mainCam.ScreenToWorldPoint(Input.mousePosition)).magnitude;
+            var temp = _startPosition - (Vector2) _mainCam.ScreenToWorldPoint(Input.mousePosition);
+            distance = temp.x > 0 ? -temp.magnitude : temp.magnitude;
             _startPosition = Vector3.zero;
             lineRenderer.positionCount = 0;
             return true;
