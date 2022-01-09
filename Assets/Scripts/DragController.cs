@@ -21,6 +21,7 @@ public class DragController : MonoBehaviour
             _startPosition = _mainCam.ScreenToWorldPoint(Input.mousePosition);
             lineRenderer.positionCount = 2;
             lineRenderer.SetPositions(new[] {(Vector3) _startPosition, (Vector3) _startPosition});
+            transform.rotation = Quaternion.Euler(Vector3.zero);
             return false;
         }
         if (Input.GetMouseButton(0))

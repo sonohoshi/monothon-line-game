@@ -28,7 +28,7 @@ public class PositionChecker : MonoBehaviour
         Debug.DrawRay(transform.position, (-transform.up - transform.right) * 0.708f, Color.green);
         Debug.DrawRay(transform.position, (-transform.up) * 0.5f, Color.green);
         SetAngle(17);
-        Debug.Log(Angle);
+        // Debug.Log(Angle);
     }
 
     private void SetAngle(float length)
